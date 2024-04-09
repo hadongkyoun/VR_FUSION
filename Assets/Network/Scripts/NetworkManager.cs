@@ -5,6 +5,7 @@ using Fusion;
 using System.Threading.Tasks;
 using Fusion.Sockets;
 using System;
+using UnityEngine.SceneManagement;
 
 public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 
@@ -32,6 +33,25 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
+    public async void StartSharedSession()
+    {
+        //Create Runner
+        CreateRunner();
+        //Load Scene
+        await LoadScene();
+        //ConnectSession
+        await Connect();
+    }
+    public async Task LoadScene()
+    {
+       AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(1);
+
+        while (!asyncLoad.isDone)
+        {
+            await Task.Yield();
+        }
+    }
+
     public void CreateRunner()
     {
         SessionRunner = Instantiate(_runnerPrefab, transform).GetComponent<NetworkRunner>();
@@ -47,6 +67,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
             GameMode = GameMode.Shared,
             SessionName = "TestSesstion",
             SceneManager = GetComponent<NetworkSceneManagerDefault>(),
+            
         };
 
         var result = await SessionRunner.StartGame(args);
@@ -61,11 +82,10 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
-    async void Start()
+    private void Start()
     {
-        CreateRunner();
 
-        await Connect();
+        //StartSharedSession();
     }
 
     void Update()
@@ -84,6 +104,11 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     {
         
     }
+    // 서버관리 셧다운
+    public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
+    {
+        Debug.Log("Runner Shutdown");
+    }
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
@@ -93,11 +118,6 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
     {
         
-    }
-
-    public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
-    {
-        Debug.Log("Runner Shutdown");
     }
 
     public void OnConnectedToServer(NetworkRunner runner)

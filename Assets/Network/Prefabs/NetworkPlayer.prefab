@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4534107853533417519}
   - component: {fileID: 1713578223616888940}
   - component: {fileID: 3074496563974979872}
+  - component: {fileID: -6225302536079153886}
   m_Layer: 0
   m_Name: NetworkPlayer
   m_TagString: Untagged
@@ -57,6 +58,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 3074496563974979872}
+  - {fileID: -6225302536079153886}
   SimulationBehaviours: []
 --- !u!114 &3074496563974979872
 MonoBehaviour:
@@ -86,6 +88,20 @@ MonoBehaviour:
     RotTeleportRadians: 1.5
   UseLegacySharedModeInterpolation: 0
   TargetInterpolationDelay: 0.03
+--- !u!114 &-6225302536079153886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2717770716134050134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa1ff7be0394db74faaaeb472923be7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  MoveSpeed: 5
 --- !u!1 &7150750414233478529
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,6 +23,21 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
     {
         
     }
+
+    // 방 참가
+    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+    {
+        if (player == runner.LocalPlayer)
+        {
+            //If Object is Cube
+            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(1, 5), 0.5f, UnityEngine.Random.Range(1, 5));
+
+            runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
+        }
+
+       
+    }
+
     public void OnConnectedToServer(NetworkRunner runner)
     {
         
@@ -63,18 +78,6 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
         
     }
 
-    // 방 참가
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
-    {
-        if (player == runner.LocalPlayer)
-        {
-            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(1, 5), 0, UnityEngine.Random.Range(1, 5));
-
-            runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
-        }
-
-       
-    }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {

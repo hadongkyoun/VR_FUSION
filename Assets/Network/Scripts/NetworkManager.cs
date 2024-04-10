@@ -10,16 +10,27 @@ using UnityEngine.SceneManagement;
 public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 
 {
+
+
+
     
 
+    // 프로그램 내에 네트워크에 접속하고 종료하는 기능을 하나의 Network Manager 인스턴스를 통해 관리
+    // 싱글톤 패턴
+    // Makes it easy to access the NetworkManager and its methods from anywhere in the game.
 
-    // This makes it easy to access the NetworkManager and its methods from anywhere in the game.
+
+
+    #region 변수
     public static NetworkManager Instance { get; private set; }
     public NetworkRunner SessionRunner { get; private set; }
 
     [SerializeField]
     private GameObject _runnerPrefab;
+    #endregion
 
+
+    //Network Manager Singleton
     private void Awake()
     {
         if(Instance != null && Instance != this)
@@ -32,6 +43,8 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
             DontDestroyOnLoad(this.gameObject);
         }
     }
+
+
 
     public async void StartSharedSession()
     {
